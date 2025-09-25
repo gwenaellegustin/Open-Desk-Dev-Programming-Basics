@@ -6,6 +6,11 @@ function main() {
 
 	function init() {
 		setCanvasSize();
+		ctx.fillStyle = "rgb(250,250,250)";
+		ctx.fillRect(0, 0, width, height);
+		ctx.fillStyle = "black";
+		ctx.ellipse(width / 2, height / 2, 100, 100, 0, 0, 2 * Math.PI);
+		ctx.fill();
 	}
 
 	function setCanvasSize() {
@@ -18,10 +23,10 @@ function main() {
 	}
 
 	function windowResizeHandler() {
-        setCanvasSize()
-    }
-	init();
+		init();
+	}
 	window.addEventListener("resize", windowResizeHandler);
+	init();
 }
 
 window.onload = main;

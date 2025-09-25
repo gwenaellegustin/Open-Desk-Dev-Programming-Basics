@@ -1,3 +1,11 @@
+const grid = {
+	numColumns: 10,
+};
+const ball = {
+	radius: 60,
+	color: "black",
+};
+
 function main() {
 	const canvas = document.getElementById("canvas");
 	const devicePixelRatio = window.devicePixelRatio || 1;
@@ -6,6 +14,27 @@ function main() {
 
 	function init() {
 		setCanvasSize();
+		ctx.fillStyle = "rgb(250,250,250)";
+		ctx.fillRect(0, 0, width, height);
+		ctx.fillStyle = ball.color;
+		for (let numCol = 0; numCol < grid.numColumns; numCol++) {
+			let sizeColumn = width / grid.numColumns;
+			let margin = sizeColumn - ball.radius;
+			let positionBall = {
+				x: sizeColumn * numCol + ball.radius / 2 + margin / 2,
+				y: height / 2,
+			};
+			ctx.ellipse(
+				positionBall.x,
+				positionBall.y,
+				ball.radius,
+				ball.radius,
+				0,
+				0,
+				2 * Math.PI
+			);
+			ctx.fill();
+		}
 	}
 
 	function setCanvasSize() {
@@ -18,10 +47,10 @@ function main() {
 	}
 
 	function windowResizeHandler() {
-        setCanvasSize()
-    }
-	init();
+		init();
+	}
 	window.addEventListener("resize", windowResizeHandler);
+	init();
 }
 
 window.onload = main;
