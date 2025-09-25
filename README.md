@@ -1,6 +1,6 @@
-# Mise à niveau Creative Coding 2024
+# 🌱 ODD 1 - “Code Map & Programming Basics”
 
-## Exercices P5 / Creative Coding
+## Exercices in JS or in P5
 
 ### Exercice 1 - line
 
@@ -41,5 +41,5 @@ Make this classic sketch based on the exercices you've made before
 ### Exercice 7 - Classic Edition - Line Between All
 
 Try to rely each point with each other
+
 ![](assets/7_p5-lineBetweenAll.png)
-# Open-Desk-Dev---Programming-Basics
