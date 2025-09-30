@@ -36,6 +36,11 @@ function drawCanvas(canvas) {
 
   ctx.fillStyle = "black";
 
-  ctx.arc(width / 2, height / 2, 100, 0, 2 * Math.PI);
-  ctx.fill();
+  const numCircles = 10;
+  const columnWidth = width / numCircles;
+  for (let i = 0; i < numCircles; i++) {
+    const positionX = columnWidth * i + columnWidth / 2;
+    ctx.arc(positionX, height / 2, columnWidth / 4, 0, 2 * Math.PI);
+    ctx.fill();
+  }
 }
