@@ -22,7 +22,6 @@ window.addEventListener("load", () => {
 });
 
 function drawCanvas(canvas) {
-  console.log("draw canvas");
   var width = window.innerWidth;
   var height = window.innerHeight;
   canvas.width = width;
@@ -31,10 +30,56 @@ function drawCanvas(canvas) {
   const ctx = canvas.getContext("2d");
   ctx.clearRect(0, 0, width, height);
 
-  ctx.fillStyle = "white";
-  ctx.fillRect(0, 0, width, height);
+  // ctx.fillStyle = "white";
+  // ctx.fillRect(0, 0, width, height);
+  // drawCircles(ctx, width, height);
 
-  drawCircles(ctx, width, height);
+  let frameCount = 0;
+  drawAnimateCircles();
+
+  function drawAnimateCircles() {
+    ctx.fillStyle = "rgba(255,255,255,0.05)";
+    ctx.fillRect(0, 0, width, height);
+    ctx.fillStyle = "black";
+
+    const circleSize = 1;
+    const numCirclesByRow = height / (circleSize * 10);
+    const numCirclesByColumn = width / (circleSize * 10);
+    const columnWidth = width / numCirclesByRow;
+    const columnHeight = height / numCirclesByColumn;
+    const move = { velocity: 0.01, amplitude: 100 };
+    for (let rowPosition = 0; rowPosition < numCirclesByRow; rowPosition++) {
+      for (
+        let columnPosition = 0;
+        columnPosition < numCirclesByColumn;
+        columnPosition++
+      ) {
+        const movingPositionY = Math.cos(
+          (frameCount + rowPosition * 10) * move.velocity
+        );
+        const positionY =
+          columnHeight * rowPosition +
+          columnHeight / 2 +
+          movingPositionY * move.amplitude;
+
+        const movingPositionX = Math.sin(
+          (frameCount + columnPosition * 10) * move.velocity
+        );
+        const positionX =
+          columnWidth * columnPosition +
+          columnWidth / 2 +
+          movingPositionX * move.amplitude;
+        ctx.beginPath();
+        ctx.arc(positionX, positionY, circleSize, 0, 2 * Math.PI);
+        ctx.fill();
+        ctx.closePath();
+      }
+    }
+
+    frameCount++;
+
+    requestAnimationFrame(drawAnimateCircles);
+  }
 }
 
 function drawCircles(ctx, width, height) {
