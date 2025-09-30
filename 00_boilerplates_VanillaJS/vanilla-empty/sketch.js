@@ -34,13 +34,22 @@ function drawCanvas(canvas) {
   ctx.fillStyle = "white";
   ctx.fillRect(0, 0, width, height);
 
-  ctx.fillStyle = "black";
+  drawCircles(ctx, width, height);
+}
 
+function drawCircles(ctx, width, height) {
+  ctx.fillStyle = "black";
   const numCircles = 10;
   const columnWidth = width / numCircles;
+  const columnHeight = height / numCircles;
   for (let i = 0; i < numCircles; i++) {
+    ctx.beginPath();
     const positionX = columnWidth * i + columnWidth / 2;
-    ctx.arc(positionX, height / 2, columnWidth / 4, 0, 2 * Math.PI);
+    for (let j = 0; j < numCircles; j++) {
+      const positionY = columnHeight * j + columnHeight / 2;
+      ctx.arc(positionX, positionY, columnWidth / 4, 0, 2 * Math.PI);
+    }
+    ctx.closePath();
     ctx.fill();
   }
 }
