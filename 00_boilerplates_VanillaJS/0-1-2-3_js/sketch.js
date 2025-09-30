@@ -43,10 +43,10 @@ function drawCanvas(canvas) {
     ctx.fillStyle = "black";
 
     const circleSize = 1;
-    const numCirclesByRow = height / (circleSize * 10);
-    const numCirclesByColumn = width / (circleSize * 10);
-    const columnWidth = width / numCirclesByRow;
-    const columnHeight = height / numCirclesByColumn;
+    const numCirclesByRow = width / (circleSize * 10);
+    const numCirclesByColumn = height / (circleSize * 10);
+    const columnWidth = width / numCirclesByColumn;
+    const columnHeight = height / numCirclesByRow;
     const move = { velocity: 0.01, amplitude: 100 };
     for (let rowPosition = 0; rowPosition < numCirclesByRow; rowPosition++) {
       for (
