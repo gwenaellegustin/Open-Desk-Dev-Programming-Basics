@@ -45,9 +45,9 @@ function drawCanvas(canvas) {
   ctx.fillStyle = "white";
   drawAnimateCircles();
   function drawAnimateCircles() {
-    ctx.fillStyle = "rgba(255,255,255,0.05)";
-    ctx.fillRect(0, 0, width, height);
-    ctx.fillStyle = "black";
+    // ctx.fillStyle = "rgba(255,255,255,0.05)";
+    // ctx.fillRect(0, 0, width, height);
+    ctx.fillStyle = "white";
     // @TODO: why invert black and white does not work?
 
     const circleSize = 10;
@@ -63,13 +63,19 @@ function drawCanvas(canvas) {
         columnPosition < numCircles;
         columnPosition = columnPosition + 1
       ) {
-        const movingPositionX = Math.sin(frameCount * move.velocity);
-        const positionX =
-          columnWidth * columnPosition +
-          columnWidth / 2 +
-          movingPositionX * move.amplitude;
+        // const randomizeStart = frameCount + columnPosition * 100; // align start on column
+        const randomizeStart =
+          frameCount + columnPosition * 100 + rowPosition * 100;
 
-        const movingPositionY = Math.cos(frameCount * move.velocity);
+        // const movingPositionX = Math.sin(frameCount * move.velocity);
+        const movingPositionX = Math.sin(randomizeStart * move.velocity); // This version is used to randomize start of the circles, need to be used also in moving PositionY
+        const positionX =
+          columnWidth * columnPosition + // position on the grid
+          columnWidth / 2 + // center of the column
+          movingPositionX * move.amplitude; // x position trigo * by number of pixels
+
+        // const movingPositionY = Math.cos(frameCount * move.velocity);
+        const movingPositionY = Math.cos(randomizeStart * move.velocity);
         const positionY =
           columnHeight * rowPosition +
           columnHeight / 2 +
