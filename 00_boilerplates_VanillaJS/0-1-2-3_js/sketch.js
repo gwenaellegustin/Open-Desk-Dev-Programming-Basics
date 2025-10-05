@@ -45,9 +45,9 @@ function drawCanvas(canvas) {
   ctx.fillStyle = "white";
   drawAnimateCircles();
   function drawAnimateCircles() {
-    // ctx.fillStyle = "rgba(255,255,255,0.05)";
-    // ctx.fillRect(0, 0, width, height);
-    ctx.fillStyle = "white";
+    ctx.fillStyle = "rgba(255,255,255,0.05)";
+    ctx.fillRect(0, 0, width, height);
+    ctx.fillStyle = "black";
     // @TODO: why invert black and white does not work?
 
     const circleSize = 10;
