@@ -37,55 +37,74 @@ function drawCanvas(canvas) {
 
   // 1 circle
   // ctx.fillStyle = "white";
-  // ctx.arc(100, 100, 50, 0, 2 * Math.PI);
-  // ctx.fill();
-  drawCircles(ctx, width, height);
+  // drawCircle(ctx, 100, 100, 50);
+  // Grid of circles
+  // drawCircles(ctx, width, height);
+
+  let frameCount = 0;
+  ctx.fillStyle = "white";
+  drawAnimateCircles();
+  function drawAnimateCircles() {
+    // ctx.fillStyle = "rgba(255,255,255,0.05)";
+    // ctx.fillRect(0, 0, width, height);
+    ctx.fillStyle = "white";
+    // @TODO: why invert black and white does not work?
+
+    const circleSize = 10;
+    // const columnWidth = width / numCirclesByColumn;
+    // const columnHeight = height / numCirclesByRow;
+    const numCircles = 3;
+    const columnWidth = width / numCircles;
+    const columnHeight = height / numCircles;
+    const move = { velocity: 0.01, amplitude: 100 };
+    for (let rowPosition = 0; rowPosition < 10; rowPosition++) {
+      for (
+        let columnPosition = 0;
+        columnPosition < numCircles;
+        columnPosition = columnPosition + 1
+      ) {
+        const movingPositionX = Math.sin(frameCount * move.velocity);
+        const positionX =
+          columnWidth * columnPosition +
+          columnWidth / 2 +
+          movingPositionX * move.amplitude;
+
+        const movingPositionY = Math.cos(frameCount * move.velocity);
+        const positionY =
+          columnHeight * rowPosition +
+          columnHeight / 2 +
+          movingPositionY * move.amplitude;
+
+        ctx.beginPath();
+        ctx.arc(positionX, positionY, circleSize, 0, 2 * Math.PI);
+        ctx.fill();
+        ctx.closePath();
+      }
+    }
+
+    frameCount++;
+
+    requestAnimationFrame(drawAnimateCircles); // No () or error of stack overflow
+  }
 
   // let frameCount = 0;
-  // drawAnimateCircles();
-
-  // function drawAnimateCircles() {
-  //   ctx.fillStyle = "rgba(255,255,255,0.05)";
+  // drawAnimateRings();
+  // function drawAnimateRings() {
+  //   // ctx.fillStyle = "rgba(255,255,255,0.05)";
   //   ctx.fillRect(0, 0, width, height);
-  //   ctx.fillStyle = "black";
+  //   ctx.fillStyle = "white";
 
-  //   const circleSize = 1;
-  //   const numCirclesByRow = width / (circleSize * 10);
-  //   const numCirclesByColumn = height / (circleSize * 10);
-  //   const columnWidth = width / numCirclesByColumn;
-  //   const columnHeight = height / numCirclesByRow;
-  //   const move = { velocity: 0.01, amplitude: 100 };
-  //   for (let rowPosition = 0; rowPosition < numCirclesByRow; rowPosition++) {
-  //     for (
-  //       let columnPosition = 0;
-  //       columnPosition < numCirclesByColumn;
-  //       columnPosition++
-  //     ) {
-  //       const movingPositionY = Math.cos(
-  //         (frameCount + rowPosition * 10) * move.velocity
-  //       );
-  //       const positionY =
-  //         columnHeight * rowPosition +
-  //         columnHeight / 2 +
-  //         movingPositionY * move.amplitude;
-
-  //       const movingPositionX = Math.sin(
-  //         (frameCount + columnPosition * 10) * move.velocity
-  //       );
-  //       const positionX =
-  //         columnWidth * columnPosition +
-  //         columnWidth / 2 +
-  //         movingPositionX * move.amplitude;
-  //       ctx.beginPath();
-  //       ctx.arc(positionX, positionY, circleSize, 0, 2 * Math.PI);
-  //       ctx.fill();
-  //       ctx.closePath();
+  //   const numCircles = 10;
+  //   const columnWidth = width / numCircles;
+  //   const lineHeight = height / numCircles;
+  //   for (let i = 0; i < numCircles; i++) {
+  //     const positionX = columnWidth * i + columnWidth / 2;
+  //     for (let j = 0; j < numCircles; j++) {
+  //       const positionY = lineHeight * j + lineHeight / 2;
+  //       drawCircle(ctx, positionX + frameCount, positionY, 10);
   //     }
   //   }
-
-  //   frameCount++;
-
-  //   requestAnimationFrame(drawAnimateCircles);
+  //   requestAnimationFrame(drawAnimateRings);
   // }
 }
 
