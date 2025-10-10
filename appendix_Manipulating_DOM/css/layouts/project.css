@@ -2,32 +2,32 @@ main {
 }
 
 .thumb {
-	max-height: 80vh;
+  max-height: 80vh;
 }
 
 h2 {
-	font-size: 15vh;
-	margin: 0;
-	padding: 0;
-	padding-top: 1rem;
-	line-height: 80%;
-	text-transform: uppercase;
+  font-size: 15vh;
+  margin: 0;
+  padding: 0;
+  padding-top: 1rem;
+  line-height: 80%;
+  text-transform: uppercase;
 }
 
 .images-container {
-	display: flex;
-	gap: 1rem;
-	width: 100%;
-	overflow-x: scroll;
+  display: flex;
+  gap: 1rem;
+  width: 100%;
+  overflow-x: scroll;
 }
 
 .images-container .carousel {
-	height: 50vh;
-	border-radius: 0.2rem;
+  height: 50vh;
+  border-radius: 0.2rem;
 }
 
 .desc-container {
-	display: flex;
-	font-size: 0.8rem;
-	gap: 0.5rem;
+  display: flex;
+  font-size: 0.8rem;
+  gap: 0.5rem;
 }
