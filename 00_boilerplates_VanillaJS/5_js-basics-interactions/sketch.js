@@ -1,9 +1,9 @@
 const grid = {
-  numColumns: 10,
-  numRows: 10,
+  numColumns: 2,
+  numRows: 2,
 };
 const ball = {
-  radius: 100,
+  radius: 50,
   color: "black",
 };
 

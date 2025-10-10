@@ -29,7 +29,6 @@ class Ball {
   update() {
     this.x += this.velocity.x;
     this.y += this.velocity.y;
-
     if (this.x > this.width - this.radius || this.x < this.radius) {
       this.velocity.x *= -1;
     }

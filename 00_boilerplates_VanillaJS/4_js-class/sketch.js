@@ -4,6 +4,8 @@ window.addEventListener("load", () => {
   myApp();
 });
 
+const numberCircleByLine = 2;
+
 function myApp() {
   const canvas = document.createElement("canvas");
   document.body.appendChild(canvas);
@@ -20,7 +22,7 @@ function myApp() {
     ctx.fillStyle = "rgba(0,0,0,0.1)";
     ctx.fillRect(0, 0, width, height);
 
-    for (let i = 0; i < 100; i++) {
+    for (let i = 0; i < numberCircleByLine * numberCircleByLine; i++) {
       circlesArray[i].update();
       circlesArray[i].draw();
     }
@@ -30,35 +32,38 @@ function myApp() {
   }
 
   // Responsive
-  window.addEventListener("resize", windowResizeHandler);
+  window.addEventListener("resize", windowResizeHandler); //@TODO: not working
+
   window.addEventListener("click", onClickHandler); //@TODO: not working
 
   function windowResizeHandler() {
     setCanvasSize(canvas, ctx, devicePixelRatio);
+    console.log("resize");
     for (let i = 0; i < circlesArray.length; i++) {
       circlesArray[i].resize(width, height);
     }
   }
+
   function onClickHandler(event) {
     console.log(event);
     let clickOnBall = false;
-    const r = map(Math.random(), 0, 1, 10, 50);
     const mx = event.clientX * devicePixelRatio;
     const my = event.clientY * devicePixelRatio;
+    console.log("mouse", mx, my);
 
     // @TODO: fade out but remove ? (exercice)
     for (let i = 0; i < circlesArray.length; i++) {
-      const pos = circlesArray[i].getPosition();
-      // console.log(pos);
-      if (pos.x >= mx - r && pos.x <= mx + r) {
-        if (pos.y >= my - r && pos.y <= my + r) {
+      const [posX, posY] = circlesArray[i].getPosition();
+      const radius = circlesArray[i].radius;
+      if (posX >= mx - radius && posX <= mx + radius) {
+        if (posY >= my - radius && posY <= my + radius) {
           circlesArray.splice(i, 1);
           clickOnBall = true;
           break;
         }
       }
     }
-    console.log(clickOnBall);
+    console.log("clickOnBall", clickOnBall);
     if (!clickOnBall) {
       const randomRadius = map(Math.random(), 0, 1, 10, 50);
       const randomColor = map(Math.random(), 0, 1, 0, 255);
@@ -75,7 +80,7 @@ function myApp() {
       circlesArray.push(newBall);
     }
 
-    console.log(circlesArray);
+    // console.log(circlesArray);
   }
 }
 
@@ -96,7 +101,7 @@ function setCanvasSize(canvas, ctx, devicePixelRatio) {
 
 function createArrayCircle(ctx, width, height) {
   const circlesArray = [];
-  const numCircles = 10;
+  const numCircles = numberCircleByLine;
 
   const columnWidth = width / numCircles;
   const columnHeight = height / numCircles;
