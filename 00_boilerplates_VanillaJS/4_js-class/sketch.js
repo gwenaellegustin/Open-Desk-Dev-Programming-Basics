@@ -11,7 +11,7 @@ function myApp() {
   document.body.appendChild(canvas);
   const devicePixelRatio = window.devicePixelRatio || 1;
   const ctx = canvas.getContext("2d");
-  const [width, height] = setCanvasSize(canvas, ctx, devicePixelRatio);
+  let [width, height] = setCanvasSize(canvas, ctx, devicePixelRatio);
 
   const circlesArray = createArrayCircle(ctx, width, height);
 
@@ -22,7 +22,7 @@ function myApp() {
     ctx.fillStyle = "rgba(0,0,0,0.1)";
     ctx.fillRect(0, 0, width, height);
 
-    for (let i = 0; i < numberCircleByLine * numberCircleByLine; i++) {
+    for (let i = 0; i < circlesArray.length; i++) {
       circlesArray[i].update();
       circlesArray[i].draw();
     }
@@ -32,12 +32,11 @@ function myApp() {
   }
 
   // Responsive
-  window.addEventListener("resize", windowResizeHandler); //@TODO: not working
-
-  window.addEventListener("click", onClickHandler); //@TODO: not working
+  window.addEventListener("resize", windowResizeHandler);
+  window.addEventListener("click", onClickHandler);
 
   function windowResizeHandler() {
-    setCanvasSize(canvas, ctx, devicePixelRatio);
+    [width, height] = setCanvasSize(canvas, ctx, devicePixelRatio);
     console.log("resize");
     for (let i = 0; i < circlesArray.length; i++) {
       circlesArray[i].resize(width, height);
@@ -63,22 +62,15 @@ function myApp() {
         }
       }
     }
-    console.log("clickOnBall", clickOnBall);
     if (!clickOnBall) {
       const randomRadius = map(Math.random(), 0, 1, 10, 50);
       const randomColor = map(Math.random(), 0, 1, 0, 255);
-      const newBall = new Ball(
-        canvas,
-        width,
-        height,
-        mx,
-        my,
-        randomRadius,
-        "red"
-      );
+      const newBall = new Ball(ctx, width, height, mx, my, randomRadius, "red");
       // newBall.draw();
       circlesArray.push(newBall);
     }
+    console.log("clickOnBall", clickOnBall);
+    console.log("circlesArray", circlesArray);
 
     // console.log(circlesArray);
   }
