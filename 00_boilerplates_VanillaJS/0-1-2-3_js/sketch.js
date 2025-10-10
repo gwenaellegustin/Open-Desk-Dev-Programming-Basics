@@ -45,14 +45,11 @@ function drawCanvas(canvas) {
   ctx.fillStyle = "white";
   drawAnimateCircles();
   function drawAnimateCircles() {
-    // ctx.fillStyle = "rgba(255,255,255,0.05)";
-    // ctx.fillRect(0, 0, width, height);
+    ctx.fillStyle = "rgba(0,0,0,0.05)";
+    ctx.fillRect(0, 0, width, height);
     ctx.fillStyle = "white";
-    // @TODO: why invert black and white does not work?
 
     const circleSize = 10;
-    // const columnWidth = width / numCirclesByColumn;
-    // const columnHeight = height / numCirclesByRow;
     const numCircles = 3;
     const columnWidth = width / numCircles;
     const columnHeight = height / numCircles;
@@ -92,26 +89,6 @@ function drawCanvas(canvas) {
 
     requestAnimationFrame(drawAnimateCircles); // No () or error of stack overflow
   }
-
-  // let frameCount = 0;
-  // drawAnimateRings();
-  // function drawAnimateRings() {
-  //   // ctx.fillStyle = "rgba(255,255,255,0.05)";
-  //   ctx.fillRect(0, 0, width, height);
-  //   ctx.fillStyle = "white";
-
-  //   const numCircles = 10;
-  //   const columnWidth = width / numCircles;
-  //   const lineHeight = height / numCircles;
-  //   for (let i = 0; i < numCircles; i++) {
-  //     const positionX = columnWidth * i + columnWidth / 2;
-  //     for (let j = 0; j < numCircles; j++) {
-  //       const positionY = lineHeight * j + lineHeight / 2;
-  //       drawCircle(ctx, positionX + frameCount, positionY, 10);
-  //     }
-  //   }
-  //   requestAnimationFrame(drawAnimateRings);
-  // }
 }
 
 function drawCircle(ctx, positionX, positionY, radius) {
