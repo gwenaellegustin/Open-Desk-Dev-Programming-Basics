@@ -5,12 +5,15 @@ window.addEventListener("load", () => {
 });
 
 function myApp() {
-  const [ctx, width, height] = setCanvas();
+  const canvas = document.createElement("canvas");
+  document.body.appendChild(canvas);
+  const devicePixelRatio = window.devicePixelRatio || 1;
+  const ctx = canvas.getContext("2d");
+  const [width, height] = setCanvasSize(canvas, ctx, devicePixelRatio);
+
+  const circlesArray = createArrayCircle(ctx, width, height);
 
   let frameCount = 0;
-
-  let circlesArray = createArrayCircle(ctx, width, height);
-
   draw();
   function draw() {
     // Reset background
@@ -25,29 +28,73 @@ function myApp() {
     frameCount++;
     requestAnimationFrame(draw);
   }
+
+  // Responsive
+  window.addEventListener("resize", windowResizeHandler);
+  window.addEventListener("click", onClickHandler); //@TODO: not working
+
+  function windowResizeHandler() {
+    setCanvasSize(canvas, ctx, devicePixelRatio);
+    for (let i = 0; i < circlesArray.length; i++) {
+      circlesArray[i].resize(width, height);
+    }
+  }
+  function onClickHandler(event) {
+    console.log(event);
+    let clickOnBall = false;
+    const r = map(Math.random(), 0, 1, 10, 50);
+    const mx = event.clientX * devicePixelRatio;
+    const my = event.clientY * devicePixelRatio;
+
+    // @TODO: fade out but remove ? (exercice)
+    for (let i = 0; i < circlesArray.length; i++) {
+      const pos = circlesArray[i].getPosition();
+      // console.log(pos);
+      if (pos.x >= mx - r && pos.x <= mx + r) {
+        if (pos.y >= my - r && pos.y <= my + r) {
+          circlesArray.splice(i, 1);
+          clickOnBall = true;
+          break;
+        }
+      }
+    }
+    console.log(clickOnBall);
+    if (!clickOnBall) {
+      const randomRadius = map(Math.random(), 0, 1, 10, 50);
+      const randomColor = map(Math.random(), 0, 1, 0, 255);
+      const newBall = new Ball(
+        canvas,
+        width,
+        height,
+        mx,
+        my,
+        randomRadius,
+        "red"
+      );
+      // newBall.draw();
+      circlesArray.push(newBall);
+    }
+
+    console.log(circlesArray);
+  }
 }
 
-function setCanvas() {
-  const myCanvas = document.createElement("canvas");
-  document.body.appendChild(myCanvas);
-
-  // Size
-  const width = window.innerWidth;
-  const height = window.innerHeight;
-  const ctx = myCanvas.getContext("2d");
-  myCanvas.width = width;
-  myCanvas.height = height;
-  myCanvas.style.width = width + "px";
-  myCanvas.style.height = height + "px";
+function setCanvasSize(canvas, ctx, devicePixelRatio) {
+  let width = window.innerWidth * devicePixelRatio;
+  let height = window.innerHeight * devicePixelRatio;
+  canvas.width = width;
+  canvas.height = height;
+  canvas.style.width = width / devicePixelRatio + "px";
+  canvas.style.height = height / devicePixelRatio + "px";
 
   // Background
   ctx.fillStyle = "black";
   ctx.fillRect(0, 0, width, height);
 
-  return [ctx, width, height];
+  return [width, height];
 }
 
-function createArrayCircle(context, width, height) {
+function createArrayCircle(ctx, width, height) {
   const circlesArray = [];
   const numCircles = 10;
 
@@ -62,7 +109,7 @@ function createArrayCircle(context, width, height) {
     ) {
       const positionY = columnHeight * rowPosition + columnHeight / 2;
       const positionX = columnWidth * columnPosition + columnWidth / 2;
-      const circle = createCircle(context, positionX, positionY);
+      const circle = createCircle(ctx, width, height, positionX, positionY);
 
       circlesArray.push(circle);
     }
@@ -70,12 +117,13 @@ function createArrayCircle(context, width, height) {
   return circlesArray;
 }
 
-function createCircle(context, positionX, positionY) {
+function createCircle(ctx, w, h, positionX, positionY) {
   const mappedRadius = map(Math.random(), 0, 1, 10, 50);
   const mappedColor = map(Math.random(), 0, 1, 0, 255);
-  console.log(mappedColor);
   const circle = new Ball(
-    context,
+    ctx,
+    w,
+    h,
     positionX,
     positionY,
     mappedRadius,

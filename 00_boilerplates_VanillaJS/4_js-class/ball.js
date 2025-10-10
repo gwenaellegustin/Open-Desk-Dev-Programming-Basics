@@ -1,6 +1,8 @@
 class Ball {
-  constructor(context, x, y, radius, color) {
-    this.context = context;
+  constructor(ctx, width, height, x, y, radius, color) {
+    this.context = ctx;
+    this.width = width;
+    this.height = height;
     this.x = x;
     this.y = y;
     this.radius = radius;
@@ -34,5 +36,14 @@ class Ball {
     if (this.y > this.height - this.radius || this.y < this.radius) {
       this.velocity.y *= -1;
     }
+  }
+
+  getPosition() {
+    return [this.x, this.y];
+  }
+
+  resize(width, height) {
+    this.width = width;
+    this.height = height;
   }
 }
