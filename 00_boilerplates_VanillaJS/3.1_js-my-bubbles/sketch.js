@@ -17,15 +17,11 @@ function myApp() {
 
   function drawCircles() {
     ctx.clearRect(0, 0, width, height);
-
-    ctx.fillStyle = "rgba(255,255,255,0.05)";
-    ctx.fillRect(0, 0, width, height);
+    // Background
     ctx.fillStyle = "black";
+    ctx.fillRect(0, 0, width, height);
 
-    // const columnWidth = width / numCircles;
-    // const columnHeight = height / numCircles;
     for (let i = 0; i < circlesArray.length; i++) {
-      // console.log(circlesArray[i]);
       const elem = circlesArray[i];
       elem.x = elem.x + elem.speedX;
       elem.y = elem.y + elem.speedY;
